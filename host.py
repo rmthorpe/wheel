@@ -1,8 +1,10 @@
 from puzzle import Puzzle 
+import os
 
 def setup():
     string = input("Choose the secret puzzle: \n")
     puz = Puzzle(string)
+    os.system('cls')
     while not puz.solveCheck():
         g = input("Guess a letter or solve [type solve]: \n")
         if g != 'solve':

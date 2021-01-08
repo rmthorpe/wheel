@@ -67,7 +67,7 @@ class Puzzle:
             print('Yes, ' + str(getVal) + ' ' + char.upper() +'s')
             position = self.__pos.get(char)
             for p in position:
-                self.__blank[p] = char.upper()
+                self.__blank[p] = char.upper() + ' '
                 self.__corSoFar += 1
                 if self.__corSoFar == self.__numChars:
                     self.__isSolved = True
