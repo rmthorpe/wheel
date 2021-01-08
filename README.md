@@ -8,7 +8,8 @@ the contestants. After typing in the word, the game begins.
 Current Features:
 
 <strong> V.1.0.0 </strong>
-Single word or phrase puzzles supported. 
+
+Single word or phrase puzzles supported.
 Command line based interactions. 
 Displays puzzles with filled in letter as guesses are made.
 Ability to solve puzzle at any point using solve command.
