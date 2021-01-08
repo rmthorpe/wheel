@@ -1,4 +1,4 @@
-class puzzle:
+class Puzzle:
 
     #Initialize the puzzle object
     def __init__(self, string):
@@ -18,6 +18,8 @@ class puzzle:
         #Checks
         self.__isSolved = False
 
+    def solveCheck(self):
+        return self.__isSolved
 
     #Convert the puzzle string into a dictionary of letters with their frequency 
     # and a dictionary of letters with their position
@@ -34,7 +36,8 @@ class puzzle:
                     total += 1
                     d[char] = 1
                     pos[char] = [i]
-                else:
+            else:
+                if char.isalpha():
                     total += 1
                     d[char] += 1
                     pos[char].append(i)
@@ -66,6 +69,8 @@ class puzzle:
             for p in position:
                 self.__blank[p] = char.upper()
                 self.__corSoFar += 1
+                if self.__corSoFar == self.__numChars:
+                    self.__isSolved = True
 
     #Attempt to solve the puzzle
     def solve(self, string):
@@ -85,8 +90,9 @@ class puzzle:
                 string += a
             print(string) 
 
+#For testing
 def main():
-    puz = puzzle("Ryan")
+    puz = Puzzle("Ryan")
     puz.display()
     puz.guess('r')
     puz.display()
