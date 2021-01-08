@@ -13,3 +13,7 @@ Single word or phrase puzzles supported.
 Command line based interactions. 
 Displays puzzles with filled in letter as guesses are made.
 Ability to solve puzzle at any point using solve command.
+
+<strong> V.1.0.1 </strong>
+
+Added a separate wheel class to be integrated into host code.
