@@ -76,10 +76,12 @@ class Puzzle:
         
         if already != None:
             print("Oh sorry, you already guessed " + char.upper())
+            return 0
 
         elif getVal == None:
             print('Sorry, no ' + char.upper() + 's')
             self.__guessed[char] = True
+            return 0
 
         else:
             print('Yes, ' + str(getVal) + ' ' + char.upper() +'s')
@@ -92,6 +94,7 @@ class Puzzle:
                 self.__corSoFar += 1
                 if self.__corSoFar == self.__numChars:
                     self.__isSolved = True
+            return getVal
 
     #Attempt to solve the puzzle
     def solve(self, string):

@@ -1,5 +1,6 @@
 import random
 import time 
+from player import Player
 
 class Wheel:
     def __init__(self, size, specials):
@@ -24,6 +25,8 @@ class Wheel:
     def spin(self):
         spin = random.randrange(0, self.__size)
         return self.__tiles[spin]
+
+
 
 
 
