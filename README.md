@@ -7,6 +7,10 @@ the contestants. After typing in the word, and setting the rules, the game begin
 
 Current Features:
 
+<strong> V.1.1.1 </strong>
+
+Vowels need to be bought and display for letters that have been guessed.
+
 <strong> V.1.1.0 </strong>
 
 This game now supports playing with a variable number of players. The game starts with a rule setting by the host, where
