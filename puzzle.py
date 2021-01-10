@@ -101,8 +101,10 @@ class Puzzle:
         if string.lower() == self.__puzzle_string.lower():
             print("You got it!")
             self.__isSolved = True
+            return True
         else:
             print("Sorry, no.")
+            return False
 
     #Display the in process puzzle string
     def display(self): 
