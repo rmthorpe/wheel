@@ -13,9 +13,9 @@ def incPtr(ptr, numPlayers):
 
 #Guess handler
 def guess(puz, player, spin):
+    puz.displayGuessed()
     g = input("Guess a letter: \n")
-    num = puz.guess(g)
-    player.incRMoney(num * spin)
+    num = puz.guess(g, True, player, spin)
     puz.display()
     return num == 0
 
