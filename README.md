@@ -17,3 +17,11 @@ Ability to solve puzzle at any point using solve command.
 <strong> V.1.0.1 </strong>
 
 Added a separate wheel class to be integrated into host code.
+
+<strong> V.1.0.2 </strong>
+
+Basic wheel and puzzle integration
+
+<strong> V.1.0.3 </strong>
+
+Handles "NO MORE VOWELS" and checks against guessing the same letter twice

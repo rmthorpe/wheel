@@ -13,7 +13,8 @@ class Puzzle:
         self.__corSoFar = 0
         self.__freq = temp[0]
         self.__pos = temp[1]
-        self.__vowels = set(string).intersection(set('aeiou'))
+        self.__guessed = dict()
+        self.__vowels = set(string).intersection({'a', 'e', 'i', 'o', 'u'})
 
         #Checks
         self.__isSolved = False
@@ -57,15 +58,35 @@ class Puzzle:
                 blanks.append('_ ')
         return blanks
 
+    #Check for no more vowels
+    def vowel(self, char):
+        intersect = {char}.intersection(self.__vowels)
+        if len(intersect) == 1:
+            self.__vowels.remove(char)
+            if len(self.__vowels) == 0:
+                print("NO MORE VOWELS")
+
+
     #Handle letter guesses and fill out in process string
     def guess(self, char):
         char = char.lower()
         getVal = self.__freq.get(char)
-        if getVal == None:
+        already = self.__guessed.get(char)
+
+        
+        if already != None:
+            print("Oh sorry, you already guessed " + char.upper())
+
+        elif getVal == None:
             print('Sorry, no ' + char.upper() + 's')
+            self.__guessed[char] = True
+
         else:
             print('Yes, ' + str(getVal) + ' ' + char.upper() +'s')
+            self.__guessed[char] = True
             position = self.__pos.get(char)
+            self.vowel(char)
+
             for p in position:
                 self.__blank[p] = char.upper() + ' '
                 self.__corSoFar += 1

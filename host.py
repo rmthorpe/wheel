@@ -12,7 +12,7 @@ def setup():
         print('take a spin! [press s then enter to spin]')
         while input() != 's': continue
         print('spinning...')
-        time.sleep(3)
+        time.sleep(1)
         print(wheel.spin())
         g = input("Guess a letter or solve [type solve]: \n")
         if g != 'solve':
