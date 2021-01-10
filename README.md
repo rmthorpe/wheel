@@ -25,3 +25,7 @@ Basic wheel and puzzle integration
 <strong> V.1.0.3 </strong>
 
 Handles "NO MORE VOWELS" and checks against guessing the same letter twice
+
+<strong> V.1.0.4 </strong>
+
+Keeps track of the money you won, 1 player game, and adds functionality for bankrupts
