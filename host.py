@@ -4,6 +4,7 @@ from player import Player
 from letter_freqs import letters
 import time
 import os
+from essential_generators import DocumentGenerator
 
 #Increment ptr 
 def incPtr(ptr, numPlayers):
@@ -45,23 +46,37 @@ def solve(puz, numPlayers, ptr):
 def main():
     #HOST RULES
     print("HOST RULES SELECTION")
-    string = input("Choose the secret puzzle: \n")
-    os.system('cls')
-    size = int(input("Choose wheel size: \n"))
-    numBank = int(input("Choose number of bankrupt tiles: \n"))
-    numPlayers = int(input("How many players are there? \n"))
+    print("Choose game mode")
+    mode = input("[1] Beat the machine \n[2] Party \n")
+    if mode == '1':
+        string = DocumentGenerator().sentence()
+        name = input("What's your name?")
+        size = int(input("Choose wheel size: \n"))
+        numBank = int(input("Choose number of bankrupt tiles: \n"))
+        ptr = 0
+        players = [Player(name, False), Player("Mr. Evil Computer", True)]
+        numPlayers = 2
+
+    else:
+        string = input("Choose the secret puzzle: \n")
+        os.system('cls')
+        size = int(input("Choose wheel size: \n"))
+        numBank = int(input("Choose number of bankrupt tiles: \n"))
+        numPlayers = int(input("How many players are there? \n"))
+ 
+        ptr = 0
+        players = []
+        for i in range(1, numPlayers + 1):
+            players.append(Player(input("Player " + str(i) + ", enter your name. \n"), False))
+        computer = input("Would you like a computer player? [y/n]")
+
+        if computer == 'y': 
+            players.append(Player("Computer Player", True))
+            numPlayers += 1
+        os.system('cls')
+
     wheel = Wheel(size, numBank*['bankrupt'])
     puz = Puzzle(string)
-    os.system('cls')
-
-    ptr = 0
-    players = []
-    for i in range(1, numPlayers + 1):
-        players.append(Player(input("Player " + str(i) + ", enter your name. \n"), False))
-    computer = input("Would you like a computer player? [y/n]")
-    if computer == 'y': 
-        players.append(Player("Computer Player", True))
-        numPlayers += 1
     os.system('cls')
 
     welcome_string = "Welcome  "

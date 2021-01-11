@@ -7,6 +7,10 @@ the contestants. After typing in the word, and setting the rules, the game begin
 
 Current Features:
 
+<strong> V.1.2.1 </strong>
+
+Modes for playing against the computer solo or in party mode created.
+
 <strong> V.1.2.0 </strong>
 
 Computer player basic functionality. The computer player will pick a letter based on the frequency of its apperance in the English language. The computer player can only choose letters at his point. 
