@@ -1,6 +1,7 @@
 from puzzle import Puzzle
 from wheel import Wheel
 from player import Player
+from letter_freqs import letters
 import time
 import os
 
@@ -14,9 +15,11 @@ def incPtr(ptr, numPlayers):
 #Guess handler
 def guess(puz, player, spin):
     puz.displayGuessed()
-    g = input("Guess a letter: \n")
+    if player.computer:
+        g = player.getComputerGuess(puz.guessed)
+    else:
+        g = input("Guess a letter: \n")
     num = puz.guess(g, True, player, spin)
-    puz.display()
     return num == 0
 
 #Spin handler
@@ -54,41 +57,65 @@ def main():
     ptr = 0
     players = []
     for i in range(1, numPlayers + 1):
-        players.append(Player(input("Player " + str(i) + ", enter your name. \n")))
+        players.append(Player(input("Player " + str(i) + ", enter your name. \n"), False))
+    computer = input("Would you like a computer player? [y/n]")
+    if computer == 'y': 
+        players.append(Player("Computer Player", True))
+        numPlayers += 1
     os.system('cls')
 
     welcome_string = "Welcome  "
     for player in players:
         welcome_string += player.getName() + " "
+    print(welcome_string)
     puz.display()
 
     while not puz.solveCheck():
         print("It's " + players[ptr].getName() + "'s turn!")
-        ip = input('take a spin! [press enter] or solve [type solve then enter] \n')
+        puz.display()
+        if not players[ptr].computer:
+            ip = input('take a spin! [press enter] or solve [type solve then enter] \n')
 
-        #Handle Solve 
-        if ip == 'solve':
-            ptr = solve(puz, numPlayers, ptr)
-            if puz.solveCheck(): break  
+            #Handle Solve 
+            if ip == 'solve':
+                ptr = solve(puz, numPlayers, ptr)
+                if puz.solveCheck(): break  
+
+            #Handle Spin
+            else:
+                spinRet = spin(wheel, players[ptr])
+                if spinRet == 'bankrupt':
+                    print("Sorry, " + players[ptr].getName() + " you have lost all your money.")
+                    ptr = incPtr(ptr, numPlayers)
 
 
-        #Handle Spin
+                #Handle guess
+                if type(spinRet) == float:
+                    boolGuess = guess(puz, players[ptr], spinRet)
+                    if boolGuess:
+                        ptr = incPtr(ptr, numPlayers)
+
+        #Handle Computer Player Behavior
         else:
+            print("Take a spin! or solve \n")
+            time.sleep(1)
             spinRet = spin(wheel, players[ptr])
+            time.sleep(1)
+
+            #Computer Spin
             if spinRet == 'bankrupt':
                 print("Sorry, " + players[ptr].getName() + " you have lost all your money.")
                 ptr = incPtr(ptr, numPlayers)
 
-
-            #Handle guess
+            #Computer guess
             if type(spinRet) == float:
-                boolGuess = guess(puz, players[ptr], spinRet)
-                if boolGuess:
-                    ptr = incPtr(ptr, numPlayers)
+                    boolGuess = guess(puz, players[ptr], spinRet)
+                    if boolGuess:
+                        ptr = incPtr(ptr, numPlayers)
 
 
         #Print Score
-        print()
+        time.sleep(1)
         print("SCORES")
         for player in players: 
             print(player.getName() + " has " + "$" + str(player.getRMoney()))

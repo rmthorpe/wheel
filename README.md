@@ -7,6 +7,10 @@ the contestants. After typing in the word, and setting the rules, the game begin
 
 Current Features:
 
+<strong> V.1.2.0 </strong>
+
+Computer player basic functionality. The computer player will pick a letter based on the frequency of its apperance in the English language. The computer player can only choose letters at his point. 
+
 <strong> V.1.1.1 </strong>
 
 Vowels need to be bought and display for letters that have been guessed.

@@ -13,7 +13,7 @@ class Puzzle:
         self.__corSoFar = 0
         self.__freq = temp[0]
         self.__pos = temp[1]
-        self.__guessed = dict()
+        self.guessed = dict()
         self.__vowels = set(string).intersection({'a', 'e', 'i', 'o', 'u'})
         self.__allVowels = {'a', 'e', 'i', 'o', 'u'}
 
@@ -69,7 +69,7 @@ class Puzzle:
 
     #Guess a char
     def charGrab(self, char):
-        self.__guessed[char] = True
+        self.guessed[char] = True
         position = self.__pos.get(char)
         self.vowel(char)
         for p in position:
@@ -77,17 +77,22 @@ class Puzzle:
             self.__corSoFar += 1
             if self.__corSoFar == self.__numChars:
                 self.__isSolved = True
+
         return len({char}.intersection({'a', 'e', 'i', 'o', 'u'})) > 0
 
     #Handle letter guesses and fill out in process string
     def guess(self, char, firstguess, player, spin):
         char = char.lower()
         getVal = self.__freq.get(char)
-        already = self.__guessed.get(char)
+        already = self.guessed.get(char)
 
         if firstguess == True and len({char}.intersection(self.__allVowels)) > 0:
-            char = input("You need to guess a consonant first: \n")
-            return self.guess(char, True, player, spin)
+            if not player.computer:
+                char = input("You need to guess a consonant first: \n")
+                return self.guess(char, True, player, spin)
+            else:
+                player.computerPtr += 1
+                return self.guess(player.getComputerGuess(self.guessed), True, player, spin)
 
         else:
             if already != None:
@@ -97,25 +102,26 @@ class Puzzle:
             else:   
                 if getVal == None:
                     print('Sorry, no ' + char.upper() + 's')
-                    self.__guessed[char] = True
+                    self.guessed[char] = True
                     return 0
 
                 else:
                     print('Yes, ' + str(getVal) + ' ' + char.upper() +'s')
                     isVowel = self.charGrab(char)
+                    self.display()
                     if not isVowel:
                         player.incRMoney(getVal * spin)
-                    self.display()
-
-                    if player.getRMoney() > 250.0 and len(self.__vowels) > 0: 
-                        vowel = input("Buy a vowel? (Vowels cost $250) [a/e/i/o/u or n]")
-                        while len({vowel}.intersection({'a', 'e', 'i', 'o', 'u', 'n'})) < 0:
-                            vowel = input("Invalid input. Accepted characters [a/e/i/o/i or n]")
-                        if vowel == 'n':
-                            return
-                        else:
-                            player.incRMoney(-250)
-                            return self.guess(vowel, False, player, spin)
+                    
+                    if not player.computer:
+                        if player.getRMoney() > 250.0 and len(self.__vowels) > 0: 
+                            vowel = input("Buy a vowel? (Vowels cost $250) [a/e/i/o/u or n]")
+                            while len({vowel}.intersection({'a', 'e', 'i', 'o', 'u', 'n'})) < 0:
+                                vowel = input("Invalid input. Accepted characters [a/e/i/o/i or n]")
+                            if vowel == 'n':
+                                return
+                            else:
+                                player.incRMoney(-250)
+                                return self.guess(vowel, False, player, spin)
                     return 1
 
     #Attempt to solve the puzzle
@@ -139,7 +145,7 @@ class Puzzle:
             print(string)
 
     def displayGuessed(self):
-        print('Letters guessed: ' + str(sorted(self.__guessed)))
+        print('Letters guessed: ' + str(sorted(self.guessed)))
 
 #For testing
 def main():
